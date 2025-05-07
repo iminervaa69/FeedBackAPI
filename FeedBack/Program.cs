@@ -13,8 +13,6 @@ builder.Services.AddDbContext<FeedBackContext>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-var useSqlite = builder.Configuration.GetValue<bool>("UseSqlite");
-
 builder.Services.AddControllers();
 
 var jwtSettings = builder.Configuration.GetSection("JWT");
