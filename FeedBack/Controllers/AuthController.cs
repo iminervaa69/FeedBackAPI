@@ -42,7 +42,7 @@ namespace FeedBack.Controllers
             var refreshToken = generateRefreshToken();
             var accessToken = getToken(data);
 
-            await _context.refreshTokens.AddAsync(new RefreshToken
+            await _context.refreshtokens.AddAsync(new RefreshToken
             {
                 UserId = data.Id,
                 Token = refreshToken,
@@ -67,7 +67,7 @@ namespace FeedBack.Controllers
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
         {
-            var tokenRecord = await _context.refreshTokens
+            var tokenRecord = await _context.refreshtokens
                 .FirstOrDefaultAsync(rt => rt.Token == refreshToken && rt.RevokedAt == null);
 
             if (tokenRecord == null || tokenRecord.ExpiresAt < DateTime.UtcNow)
@@ -78,8 +78,8 @@ namespace FeedBack.Controllers
             var newRefreshToken = generateRefreshToken();
 
             tokenRecord.RevokedAt = DateTime.UtcNow;
-
-            await _context.refreshTokens.AddAsync(new RefreshToken
+            
+            await _context.refreshtokens.AddAsync(new RefreshToken
             {
                 UserId = user.Id,
                 Token = newRefreshToken,
@@ -99,7 +99,7 @@ namespace FeedBack.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> logout([FromBody] string refreshToken)
         {
-            var token = await _context.refreshTokens
+            var token = await _context.refreshtokens
                 .FirstOrDefaultAsync(t => t.Token == refreshToken && t.RevokedAt == null);
 
             if (token != null)

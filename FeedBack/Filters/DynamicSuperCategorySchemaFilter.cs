@@ -23,7 +23,7 @@ namespace FeedBack.Filters
                 using var scope = _serviceProvider.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<FeedBackContext>();
 
-                var superCategories = db.superCategories
+                var superCategories = db.supercategories
                     .Select(c => c.Name)
                     .ToList();
 

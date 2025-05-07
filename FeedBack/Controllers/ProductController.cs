@@ -25,7 +25,7 @@ namespace FeedBack.Controllers
             int categoryId = req.CategoryId;
 
 
-            var superCategory = _context.superCategories
+            var superCategory = _context.supercategories
                 .Where(sc => sc.Id == superCategoryId)
                 .Select(sc => sc.Name)
                 .FirstOrDefault();
@@ -67,7 +67,7 @@ namespace FeedBack.Controllers
             return $"{baseCode}{nextIndex:D3}";
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public ActionResult GetAll(string title = "", int page = 1, int size = 10)
         {
@@ -88,7 +88,7 @@ namespace FeedBack.Controllers
                     created_at = m.CreatedAt,
                     updated_at = m.UpdatedAt,
                     delete_id = m.DeletedAt,
-                    category = _context.productCategories
+                    category = _context.productcategories
                         .Where(mg => mg.ProductId == m.Id)
                         .Join(_context.categories,
                               mg => mg.CategoryId,
@@ -122,7 +122,7 @@ namespace FeedBack.Controllers
 
             if (getReview)
             {
-                var review = _context.productReviews.Where(i => i.ProductId.Equals(data.Id)).ToList();
+                var review = _context.productreviews.Where(i => i.ProductId.Equals(data.Id)).ToList();
 
                 return Ok(new
                 {
@@ -133,7 +133,7 @@ namespace FeedBack.Controllers
                     created_at = data.CreatedAt,
                     updated_at = data.UpdatedAt,
                     delete_at = data.DeletedAt,
-                    category = _context.productCategories
+                    category = _context.productcategories
                         .Where(i => i.ProductId == data.Id)
                         .Join(_context.categories,
                               pc => pc.CategoryId,
@@ -141,7 +141,7 @@ namespace FeedBack.Controllers
                               (pc, c) => new
                               {
                                   CategoryName = c.Name,
-                                  SuperCategoryName = _context.superCategories
+                                  SuperCategoryName = _context.supercategories
                                       .Where(sc => sc.Id == pc.SuperCategoryId)
                                       .Select(sc => sc.Name)
                                       .FirstOrDefault()
@@ -178,7 +178,7 @@ namespace FeedBack.Controllers
                 created_at = data.CreatedAt,
                 updated_at = data.UpdatedAt,
                 delete_id = data.DeletedAt,
-                category = _context.productCategories
+                category = _context.productcategories
                         .Where(i => i.ProductId == data.Id)
                         .Join(_context.categories,
                               pc => pc.CategoryId,
@@ -186,7 +186,7 @@ namespace FeedBack.Controllers
                               (pc, c) => new
                               {
                                   CategoryName = c.Name,
-                                  SuperCategoryName = _context.superCategories
+                                  SuperCategoryName = _context.supercategories
                                       .Where(sc => sc.Id == pc.SuperCategoryId)
                                       .Select(sc => sc.Name)
                                       .FirstOrDefault()
@@ -222,7 +222,7 @@ namespace FeedBack.Controllers
             _context.products.Add(add);
             _context.SaveChanges(); 
 
-            _context.productCategories.Add(new ProductCategory
+            _context.productcategories.Add(new ProductCategory
             {
                 ProductId = add.Id,
                 CategoryId = req.CategoryId,
@@ -249,7 +249,7 @@ namespace FeedBack.Controllers
                     created_at = product.CreatedAt,
                     updated_at = product.UpdatedAt,
                     delete_id = product.DeletedAt,
-                    category = _context.productCategories
+                    category = _context.productcategories
                         .Where(i => i.ProductId == product.Id)
                         .Join(_context.categories,
                               pc => pc.CategoryId,
@@ -257,7 +257,7 @@ namespace FeedBack.Controllers
                               (pc, c) => new
                               {
                                   CategoryName = c.Name,
-                                  SuperCategoryName = _context.superCategories
+                                  SuperCategoryName = _context.supercategories
                                       .Where(sc => sc.Id == pc.SuperCategoryId)
                                       .Select(sc => sc.Name)
                                       .FirstOrDefault()
@@ -308,7 +308,7 @@ namespace FeedBack.Controllers
                     created_at = data.CreatedAt,
                     updated_at = data.UpdatedAt,
                     delete_id = data.DeletedAt,
-                    category = _context.productCategories
+                    category = _context.productcategories
                         .Where(i => i.ProductId == data.Id)
                         .Join(_context.categories,
                               pc => pc.CategoryId,
@@ -316,7 +316,7 @@ namespace FeedBack.Controllers
                               (pc, c) => new
                               {
                                   CategoryName = c.Name,
-                                  SuperCategoryName = _context.superCategories
+                                  SuperCategoryName = _context.supercategories
                                       .Where(sc => sc.Id == pc.SuperCategoryId)
                                       .Select(sc => sc.Name)
                                       .FirstOrDefault()
